@@ -1,0 +1,4 @@
+# ---- Layout-aware document parsing (heavy: pulls in PyTorch) ----
+# Handles PDF/DOCX/PPTX/HTML -> structured markdown with tables and headings preserved.
+# Installed separately so you can choose CPU-only PyTorch (see scripts/setup.sh).
+docling>=2.0

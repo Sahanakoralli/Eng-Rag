@@ -1,0 +1,60 @@
+{
+ "name": "u2-cad4a367af92",
+ "turns": [
+  {
+   "question": "what is java compiler?",
+   "answer": "The Java compiler is the javac tool that translates Java source code into Java bytecode, which is an intermediate representation that the Java Virtual Machine (JVM) executes; it is not intended for normal programming use and has been deprecated by JDK 9 [1].",
+   "standalone": "what is java compiler?",
+   "cited_docs": [
+    "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.690",
+     "section": "About the Author > Compiler",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.63",
+     "section": "About the Author > Compiling the Program",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.41",
+     "section": "About the Author > Java's Magic: The Bytecode",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.1464",
+     "section": "About the Author > Compile and Run Simple Single-File Programs in One Step",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.41",
+     "section": "About the Author > Java's Magic: The Bytecode",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.141",
+     "section": "Operating Systems > Self Review",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793782139.4255,
+   "status": "answered"
+  }
+ ]
+}

@@ -1,0 +1,170 @@
+{
+ "name": "u1-95391b0baeb1",
+ "turns": [
+  {
+   "question": "What is ARM",
+   "answer": "ARM is a family of 32-bit RISC microprocessor architectures, with ARM standing for Advanced RISC Machines, as described in the sources [1] and [5].",
+   "standalone": "What is ARM",
+   "cited_docs": [
+    "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.24",
+     "section": "ARM Assembly Language Programming & Architecture > Section 1.2: The ARM Family History",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.118",
+     "section": "ARM Assembly Language Programming & Architecture > Solution:",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.53",
+     "section": "ARM Assembly Language Programming & Architecture > ARM data type",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/ARM System Developers Guide Designing and Optimizing System Software by Andrew Sloss Dominic Symes Chris Wright (z-lib.org).pdf, p.12",
+     "section": "ARM System Developer's Guide > Preface",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.18",
+     "section": "ARM Assembly Language Programming & Architecture > 2007",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.17",
+     "section": "ARM Assembly Language Programming & Architecture > 1999",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793781646.8779838,
+   "status": "answered"
+  },
+  {
+   "question": "what is operation system?",
+   "answer": "An operating system is software that enables applications to interact with a computer's hardware and manages hardware resources such as processors, memory, input/output devices, and communication devices, while also managing applications and other software abstractions; it serves as a layer between applications and hardware, providing services that allow each application to execute safely and effectively [2].",
+   "standalone": "What is an operating system?",
+   "cited_docs": [
+    "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.99",
+     "section": "Operating Systems > 44 Introduction to Operating Systems",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.62-63",
+     "section": "Operating Systems > 1.2 What Is an Operating System?",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.59",
+     "section": "Operating Systems > Objectives",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.60",
+     "section": "Operating Systems > 1.2 What Is an Operating System?",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/ARM System Developers Guide Designing and Optimizing System Software by Andrew Sloss Dominic Symes Chris Wright (z-lib.org).pdf, p.28-29",
+     "section": "ARM System Developer's Guide > 1.4.2 Operating System",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.60-62",
+     "section": "Operating Systems > 1.11 Operating System Environments",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793781669.0135114,
+   "status": "answered"
+  },
+  {
+   "question": "list different types of operation system",
+   "answer": "Operating systems include: MS-DOS, 603, 604, Multics, 11,111,112,133,451, MVS, 460, MVS/370, 460, MVS/ESA, 460, MVS/XA, 460, OpenBSD, 903,904, OS/360, 9,459, OS/390, 460, OS/VS1, 460, OS/VS2, 460, OSF/1, 134, Real-Time operating system, 358, Solaris, 134,161, 167, Solo, 252, Symbian, 754, SymbianOS, 754, THE, 36,227, THE operating system, 36, 227, Time Sharing System (TSS), 11, TSS (Time Sharing System), 11, UNIX, 11,132,134,605,1001, UNIX system, 329, User-Mode Linux (UML), 951, VAX/VMS, 329, VM, 461,462, VM (Virtual Machine) operating system, 11, 461, VM(virtual machine), 11,27, 461, VM/370, 462, VMS, 33,1039, Windows 3.0, 20, Windows 95, 20,1039, Windows 98, 20,1040, Windows CE, 1108, Windows Millennium Edition, 1040, Windows NT, 20, Windows operating system, 20, Windows Server 2003, 1106, Windows XP, 131,161,1036, Windows XP Embedded, 1108, XTS-300, 907, z/OS, 460. [3]",
+   "standalone": "list different types of operating system",
+   "cited_docs": [
+    "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.3",
+     "section": "Operating Systems > Computer Science Series",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Fundamentals of Database Systems by Ramez Elmasri Shamkant B. Navathe (z-lib.org).pdf, p.445",
+     "section": "Database Systems > Review Questions",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.1243",
+     "section": "Operating Systems > 1200",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Fundamentals of Database Systems by Ramez Elmasri Shamkant B. Navathe (z-lib.org).pdf, p.403-404",
+     "section": "Database Systems > 12.1.7 Summary of Object Database Concepts",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.1252",
+     "section": "Operating Systems > Z",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Fundamentals of Database Systems by Ramez Elmasri Shamkant B. Navathe (z-lib.org).pdf, p.307-308",
+     "section": "Database Systems > Review Questions",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793781699.367618,
+   "status": "answered"
+  }
+ ]
+}

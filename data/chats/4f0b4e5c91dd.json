@@ -1,0 +1,60 @@
+{
+ "name": "4f0b4e5c91dd",
+ "turns": [
+  {
+   "question": "what is operating system",
+   "answer": "An operating system is software that enables applications to interact with a computer's hardware, managing hardware resources and providing services for safe and effective execution of applications [2].",
+   "standalone": "what is operating system",
+   "cited_docs": [
+    "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.99",
+     "section": "Operating Systems > 44 Introduction to Operating Systems",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.62-63",
+     "section": "Operating Systems > 1.2 What Is an Operating System?",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.59",
+     "section": "Operating Systems > Objectives",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.60",
+     "section": "Operating Systems > 1.2 What Is an Operating System?",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/ARM System Developers Guide Designing and Optimizing System Software by Andrew Sloss Dominic Symes Chris Wright (z-lib.org).pdf, p.28-29",
+     "section": "ARM System Developer's Guide > 1.4.2 Operating System",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.43",
+     "section": "Operating Systems > Tour of the Book",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793680634.1828082,
+   "status": "answered"
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+/* Login / signup page + the account row at the bottom of the sidebar.
+   Uses your existing CSS variables (--bg, --card, --text, --mut, --line, --acc, --bad) when they exist. */
+.auth-page, .auth-loading {
+  --a-bg: var(--bg, #f6f7f9); --a-card: var(--card, #fff); --a-text: var(--text, #1d2330);
+  --a-mut: var(--mut, #667085); --a-line: var(--line, #e3e6ec); --a-acc: var(--acc, #2f6fed); --a-bad: var(--bad, #b42318);
+}
+@media (prefers-color-scheme: dark) {
+  .auth-page, .auth-loading {
+    --a-bg: var(--bg, #14171d); --a-card: var(--card, #1c2028); --a-text: var(--text, #e8eaf0);
+    --a-mut: var(--mut, #98a2b3); --a-line: var(--line, #2c313c); --a-acc: var(--acc, #6b9bff); --a-bad: var(--bad, #ff7b72);
+  }
+}
+.auth-page, .auth-loading {
+  min-height: 100vh; display: grid; place-items: center; padding: 24px;
+  background: var(--a-bg); color: var(--a-text); font: 15px/1.5 system-ui, sans-serif;
+}
+.auth-card {
+  width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px;
+  background: var(--a-card); border: 1px solid var(--a-line); border-radius: 12px; padding: 28px;
+}
+.auth-card h1 { margin: 0; font-size: 22px; font-weight: 600; }
+.auth-card .hint { margin: 0; color: var(--a-mut); font-size: 13px; }
+.auth-tabs { display: flex; gap: 6px; }
+.auth-tabs button { flex: 1; }
+.auth-card button {
+  font: inherit; border: 1px solid var(--a-line); background: var(--a-card); color: var(--a-text);
+  border-radius: 8px; padding: 8px 12px; cursor: pointer;
+}
+.auth-card button.on, .auth-card button.primary { background: var(--a-acc); border-color: var(--a-acc); color: #fff; }
+.auth-card button:disabled { opacity: .55; cursor: default; }
+.auth-card label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--a-mut); }
+.auth-card input {
+  font: inherit; width: 100%; padding: 9px 10px; border: 1px solid var(--a-line); border-radius: 8px;
+  background: var(--a-bg); color: var(--a-text);
+}
+.auth-card button:focus-visible, .auth-card input:focus-visible { outline: 2px solid var(--a-acc); outline-offset: 1px; }
+.auth-card .pw { position: relative; display: block; }
+.auth-card .pw input { padding-right: 64px; }
+.auth-card .pw-toggle { position: absolute; right: 4px; top: 4px; bottom: 4px; padding: 0 10px; border: 0; background: none; color: var(--a-mut); }
+.auth-error { min-height: 1.3em; color: var(--a-bad); font-size: 13px; }
+
+.sidebar .account {
+  display: flex; align-items: center; gap: 8px; margin-top: auto; padding: 10px 12px;
+  border-top: 1px solid var(--line, #e3e6ec); font-size: 13px;
+}
+.sidebar .account .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar .account .link { border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; padding: 0; font: inherit; }

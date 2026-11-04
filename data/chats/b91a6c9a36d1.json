@@ -1,0 +1,60 @@
+{
+ "name": "b91a6c9a36d1",
+ "turns": [
+  {
+   "question": "what is operating system explain in details",
+   "answer": "An operating system is software that enables applications to interact with a computer's hardware, separating applications from the hardware they access and providing services that allow each application to execute safely and effectively [1]. It is primarily a resource manager that manages hardware (processors, memory, input/output devices, communication devices) and software abstractions (processes, threads, files, databases) [1]. The core components of an operating system are contained in the kernel [1]. Operating systems are found in devices ranging from cell phones and automobiles to personal and mainframe computers [1]. They manage the software and hardware to produce the desired result when a user requests an action (e.g., execute an application or print a document) [1].",
+   "standalone": "what is operating system explain in details",
+   "cited_docs": [
+    "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.62-63",
+     "section": "Operating Systems > 1.2 What Is an Operating System?",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.289",
+     "section": "Operating Systems > Exercises",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.1027",
+     "section": "Operating Systems > 20.8 Input/Output Management",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.59",
+     "section": "Operating Systems > Objectives",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.110",
+     "section": "Operating Systems > 56 Hardware and Software Concepts",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.289",
+     "section": "Operating Systems > Exercises",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793680710.2464633,
+   "status": "answered"
+  }
+ ]
+}

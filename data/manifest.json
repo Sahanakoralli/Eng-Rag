@@ -1,0 +1,107 @@
+{
+  "_config": {
+    "images": false,
+    "ocr": false,
+    "embedding_model": "BAAI/bge-small-en-v1.5",
+    "sparse_model": "Qdrant/bm25",
+    "chunk_size": 600,
+    "chunk_overlap": 80,
+    "chunker_version": 3
+  },
+  "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf": {
+    "hash": "3707bfc1a46370b8c3404bdd07c2e61d8c1715d4682a37e29978c3f21682e00e44136fa3",
+    "chunks": 739
+  },
+  "cse/ARM System Developers Guide Designing and Optimizing System Software by Andrew Sloss Dominic Symes Chris Wright (z-lib.org).pdf": {
+    "hash": "797c5015e644747450da168990530237c4ab8162ecbcd3d2259e85e19abb632d44136fa3",
+    "chunks": 858
+  },
+  "cse/BookManagement Information Systems - Kenneth C. Laudon - 2016 (1).pdf": {
+    "hash": "824f47c8153788cc604e28b474b988e02c05ce208a30fd43298885080d89c07a44136fa3",
+    "chunks": 1577
+  },
+  "cse/Computer Networking A Top-Down Approach by James F. Kurose Keith W. Ross (z-lib.org).pdf": {
+    "hash": "1f90417a2c67b2af1a4339da7263ee6c26371c0299551bb52664b423951a679444136fa3",
+    "chunks": 1320
+  },
+  "cse/Computer Networks 5th Edition by ANDREW S.TANENBAUM  DAVID J.WETHERALL (z-lib.org).pdf": {
+    "hash": "87f5722c842555b3fcfd43c5a2d717219af1d643822c1410d6cc6db222cd059344136fa3",
+    "chunks": 1434
+  },
+  "cse/Cryptography and Network Security- William Stallings.pdf": {
+    "hash": "c5b1a32cb8e1b0a62ee0cd82ce58dc5e95d36b2b648d10af45a279d40a8f6bb344136fa3",
+    "chunks": 1160
+  },
+  "cse/Data Communications and Network by Forouzan Behrouz (z-lib.org) (1).pdf": {
+    "hash": "be53190de9f9114fe9001fe5c5380f2bd387dc9c2cc7d5d81aaaf3b11a7dd75044136fa3",
+    "chunks": 3053
+  },
+  "cse/Data_Storage_Networking.pdf": {
+    "hash": "1e5af601409a19e04f5714f44678bfb5c417207a0e1c42d901ad83905fdb3d6f44136fa3",
+    "chunks": 1029
+  },
+  "cse/Foundations of Computing An Accessible Introduction to Automata and Formal Languages by Charles D. Allison (z-lib.org).pdf": {
+    "hash": "48a9b3b44e40bcefe6a9914cd506c4308e7c87d7790217efe7180caed8ec806a44136fa3",
+    "chunks": 360
+  },
+  "cse/Fundamentals of Database Systems by Ramez Elmasri Shamkant B. Navathe (z-lib.org).pdf": {
+    "hash": "bcb5cd4bfcab378e0d6ea8e1d6c1d0d5f1fa3190f318908c3d99fafb867474be44136fa3",
+    "chunks": 2167
+  },
+  "cse/Graph Theory with Applications to Engineering and Computer Science by Narsingh Deo (z-lib.org).pdf": {
+    "hash": "90c68e529688d266810fd26ff4eb3a29c4ffd3947cf7c563d4aa6044d103be7d44136fa3",
+    "chunks": 550
+  },
+  "cse/Introduction to Automata Theory Languages and Computations by John E. Hopcroft Rajeev Motwani Jeffrey D. Ullman (z-lib.org).pdf": {
+    "hash": "1c2106dc6d41c3901d8acef34bdda9db922e03bcd74f76167caec8aa0f1ba33c44136fa3",
+    "chunks": 762
+  },
+  "cse/Introduction to Languages and the Theory of Computation by John Martin (z-lib.org).pdf": {
+    "hash": "9e122ddd45a658287e51d58de90ec7afb9f66b787b1e9e9ed26e2a7b7959a95744136fa3",
+    "chunks": 724
+  },
+  "cse/Introduction to Storage Area Networks.pdf": {
+    "hash": "889c3ccfa26be094f981155061f715d7f6e383af6a5b9d83777dd8349ab0784f44136fa3",
+    "chunks": 534
+  },
+  "cse/Introduction to the Design and Analysis of Algorithms by Anany Levitin (z-lib.org).pdf": {
+    "hash": "875380b206f4f51577a27639498f55da87d8f75c89e7590bfd5460f32f17091344136fa3",
+    "chunks": 749
+  },
+  "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf": {
+    "hash": "0dbaabd32d95691c830351b23a0322e9010041fcb857414f4e6df7c5fbbc022d44136fa3",
+    "chunks": 1491
+  },
+  "cse/MCES-2020- labManual New 21-01-20 Corrected.pdf": {
+    "hash": "e61db9e4ed865d27302918fc14b06f470163d6070677cf99969451832f0fba4844136fa3",
+    "chunks": 77
+  },
+  "cse/Object-oriented analysis and design with applications by Grady Booch Robert A. Maksimchuk Michael W. Engel Bobbi J. Young Jim Conallen Kelli A. Houston (z-lib.org).pdf": {
+    "hash": "d39ecdab76d64bcb2eef6499f2b55d38e4f28dbcb744ec82aa16e6917521785844136fa3",
+    "chunks": 967
+  },
+  "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf": {
+    "hash": "6ac75c06be9a13d067ad43ba013cc75eba85698fc8a5b28f67ce5ae32388136e44136fa3",
+    "chunks": 2855
+  },
+  "cse/SHORTCUT- SOFTWARE_ENGINEERING_LECTURE_NOTES.pdf": {
+    "hash": "c54f1dd614d0661fdfea549279c48679fcb468d968658d32c13a337a11dccffd44136fa3",
+    "chunks": 166
+  },
+  "cse/THEORY OF COMPUTER SCIENCE Automata Languages and Computation by K.l.P. MISHRA N. CHANDRASEKARAN (z-lib.org).pdf": {
+    "hash": "53aa088e1d9e105943aba3e09ddc9185d44953875ef2c752f124ad9bbd81d4ca44136fa3",
+    "chunks": 725
+  },
+  "cse/UNIX Network Programming Volume 1 The Sockets Networking API 3rd Edition by W. Richard Stevens Bill Fenner Andrew M. Rudoff (z-lib.org).pdf": {
+    "hash": "789f9245969975f3e1b4ceddae0e86791e36f286519b2c03afde765071db6f2b44136fa3",
+    "chunks": 1703
+  },
+  "cse/amortized-analysis.pdf": {
+    "hash": "5a35017a8944ea415728fa542935ccca9f4ea3786e7097a7922867e44ff6327d44136fa3",
+    "chunks": 15
+  },
+  "sample_pump_manual.md": {
+    "hash": "f3353aac3509400f408c0b5c55dc0cba0303bed46dc98246b86ee9a1fc56154313834610",
+    "chunks": 4
+  }
+}

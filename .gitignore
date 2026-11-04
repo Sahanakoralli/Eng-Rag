@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+data/qdrant/
+data/processed/*
+data/raw/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+.pytest_cache/
+*.egg-info/
+.DS_Store
+
+# frontend
+frontend/node_modules/
+frontend/dist/
