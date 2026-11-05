@@ -51,6 +51,7 @@ export default function Sidebar({ history, activeId, onNew, onOpen, onDelete, op
         {user && (
           <div className="account">
             <span className="who" title={user.email}>{user.username}</span>
+            <a className="link" href="#about">About</a>
             <button className="link" onClick={logout}>Log out</button>
           </div>
         )}

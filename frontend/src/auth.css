@@ -37,6 +37,7 @@
 .auth-card .pw { position: relative; display: block; }
 .auth-card .pw input { padding-right: 64px; }
 .auth-card .pw-toggle { position: absolute; right: 4px; top: 4px; bottom: 4px; padding: 0 10px; border: 0; background: none; color: var(--a-mut); }
+.auth-card .auth-back { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--a-mut); text-decoration: underline; font-size: 13px; }
 .auth-error { min-height: 1.3em; color: var(--a-bad); font-size: 13px; }
 
 .sidebar .account {

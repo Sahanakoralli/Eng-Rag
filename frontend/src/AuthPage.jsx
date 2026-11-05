@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import * as auth from "./auth.js";
 
-export default function AuthPage({ onAuthed, notice = "" }) {
-  const [mode, setMode] = useState("login");
+export default function AuthPage({ onAuthed, notice = "", initialMode = "login", onBack }) {
+  const [mode, setMode] = useState(initialMode);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +37,7 @@ export default function AuthPage({ onAuthed, notice = "" }) {
   return (
     <main className="auth-page">
       <form className="auth-card" onSubmit={submit}>
+        {onBack && <button type="button" className="auth-back" onClick={onBack}>Back to the project page</button>}
         <h1>Chat with your documents</h1>
         <p className="hint">{login ? "Log in to see your chats and files." : "Create an account to keep your chats and files private."}</p>
 

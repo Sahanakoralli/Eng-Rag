@@ -1,0 +1,60 @@
+{
+ "name": "u3-68dec5ef97cc",
+ "turns": [
+  {
+   "question": "What is Java collection?",
+   "answer": "Java collection is a sophisticated hierarchy of interfaces and classes that provide state-of-the-art technology for managing groups of objects, as described in the Collections Framework section of the java.util package [1][2].",
+   "standalone": "What is Java collection?",
+   "cited_docs": [
+    "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.17",
+     "section": "About the Author > Chapter 19 java.util Part 1: The Collections Framework",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.712",
+     "section": "About the Author > Collections Overview",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.711",
+     "section": "About the Author > java.util Part 1: The Collections Framework",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.713",
+     "section": "About the Author > PrimitiveIterator.OfDouble.",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.590",
+     "section": "About the Author > CHAPTER 19",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.1251-1253",
+     "section": "About the Author > Collecting",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793843472.290748,
+   "status": "answered"
+  }
+ ]
+}
