@@ -211,4 +211,4 @@ whether the system retrieved and cited the correct document. Read the `partial`/
 1. ~~Ingestion~~ (done)
 2. ~~Retrieval (hybrid search + metadata filters + rerank) and evaluation~~ (done)
 3. ~~Answer generation with citations~~ (done)
-4. Scale to ~500-page documents (batch parsing, outline-based structure, parent-child retrieval) 
+4. Scale to ~500-page documents (batch parsing, outline-based structure, parent-child retrieval)
