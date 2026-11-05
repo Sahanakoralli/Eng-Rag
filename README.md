@@ -1,6 +1,4 @@
-New to the code? Read [docs/CODEBASE_GUIDE.md](docs/CODEBASE_GUIDE.md): how it works and where to change things.
-
-RAG pipeline for engineering documents (manuals, specs, standards, code docs).
+# RAG pipeline for engineering documents (manuals, specs, standards, code docs).
 
 ## Stack
 
