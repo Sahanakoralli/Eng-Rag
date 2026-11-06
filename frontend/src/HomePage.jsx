@@ -18,38 +18,85 @@ const SECTIONS = [
   ["layout", "Project layout"],
 ];
 
-const SAMPLE_SOURCES = [
-  { n: 1, file: "Structural_Specification.pdf", page: "p.42", section: "4.3 Concrete cover" },
-  { n: 2, file: "Structural_Specification.pdf", page: "p.44", section: "4.5 Cast against soil" },
+const EXAMPLES = ["What is RAG?", "Explain this research paper.", "Give me the key points."];
+
+const FEATURES = [
+  ["Upload Documents", <path key="a" d="M13 3 6 13h5l-1 8 8-11h-5z" />],
+  ["Ask Questions", <g key="b"><circle cx="11" cy="11" r="6" /><path d="m20 20-4.2-4.2" /></g>],
+  ["Get Accurate Answers", <g key="c"><ellipse cx="12" cy="6.5" rx="7" ry="3" /><path d="M5 6.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5M5 11.5v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5" /></g>],
 ];
 
-function Cite({ n, hi, onSelect }) {
+function LogoMark() {
   return (
-    <button type="button" className={"cite" + (hi === n ? " on" : "")} aria-pressed={hi === n} onClick={() => onSelect(n)}>
-      [{n}]
-    </button>
+    <svg className="logo" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <defs>
+        <linearGradient id="hl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#8fd3ff" /><stop offset="1" stopColor="#8b7bff" /></linearGradient>
+      </defs>
+      <path d="M17 27H9a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6" stroke="url(#hl)" strokeWidth="2.2" />
+      <path d="M11 11h6M11 15h4" stroke="url(#hl)" strokeWidth="2.2" />
+      <circle cx="21" cy="21" r="4.5" stroke="url(#hl)" strokeWidth="2.2" />
+      <path d="m24.5 24.5 3.5 3.5" stroke="url(#hl)" strokeWidth="2.2" />
+    </svg>
   );
 }
 
-function CitationDemo() {
-  const [hi, setHi] = useState(1);
+function Mascot() {
   return (
-    <figure className="demo">
-      <div className="demo-q">What concrete cover do footings cast against soil need?</div>
-      <p className="demo-a">
-        Footings cast directly against soil need <mark>75 mm</mark> of cover <Cite n={1} hi={hi} onSelect={setHi} />. The value is larger than for
-        formed surfaces because the concrete stays in contact with the ground <Cite n={2} hi={hi} onSelect={setHi} />.
-      </p>
-      <ul className="demo-src" aria-label="Sources">
-        {SAMPLE_SOURCES.map((s) => (
-          <li key={s.n} className={hi === s.n ? "hi" : ""}>
-            <b>[{s.n}]</b> {s.file}, {s.page}
-            <span className="sec">{s.section}</span>
-          </li>
-        ))}
-      </ul>
-      <figcaption>Example with invented documents, to show how citations work. Select a citation to see its source.</figcaption>
-    </figure>
+    <svg className="mascot" viewBox="0 0 440 400" role="img" aria-label="A friendly robot reading a PDF and thinking of a question">
+      <defs>
+        <radialGradient id="mGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stopColor="#5b6cff" stopOpacity=".55" /><stop offset="1" stopColor="#5b6cff" stopOpacity="0" /></radialGradient>
+        <linearGradient id="mBubble" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#a9bcff" /><stop offset="1" stopColor="#5f6dff" /></linearGradient>
+        <linearGradient id="mWhite" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#ffffff" /><stop offset="1" stopColor="#bfc9ff" /></linearGradient>
+        <linearGradient id="mScreen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#0a1236" /><stop offset="1" stopColor="#1b2670" /></linearGradient>
+      </defs>
+      <circle cx="235" cy="225" r="175" fill="url(#mGlow)" />
+
+      {/* speech bubble */}
+      <rect x="45" y="18" width="150" height="118" rx="40" fill="url(#mBubble)" />
+      <path d="M118 130 150 176 160 128Z" fill="#6c7bff" />
+      <text x="120" y="102" textAnchor="middle" fontSize="84" fontWeight="800" fill="#fff" fontFamily="Lato, system-ui, sans-serif">?</text>
+      <g stroke="#7fb0ff" strokeWidth="5" strokeLinecap="round"><path d="M222 38 232 20" /><path d="M240 58 262 50" /><path d="M236 36 250 30" /></g>
+
+      {/* big PDF sheet */}
+      <g transform="translate(18 186) rotate(-8)">
+        <rect width="118" height="148" rx="12" fill="#eef1ff" />
+        <g stroke="#b3bdf0" strokeWidth="6" strokeLinecap="round"><path d="M70 28h28" /><path d="M70 46h28" /><path d="M20 98h78" /><path d="M20 116h60" /></g>
+        <rect x="-16" y="42" width="78" height="32" rx="9" fill="#ff5b78" />
+        <text x="23" y="65" textAnchor="middle" fontSize="19" fontWeight="800" fill="#fff" fontFamily="Lato, system-ui, sans-serif">PDF</text>
+      </g>
+
+      {/* small sheets */}
+      <g transform="translate(118 322) rotate(-6)"><rect width="62" height="76" rx="8" fill="#e6eaff" /><g stroke="#aab5ee" strokeWidth="5" strokeLinecap="round"><path d="M12 20h38" /><path d="M12 36h38" /><path d="M12 52h26" /></g></g>
+      <g transform="translate(352 262) rotate(9)"><rect width="64" height="84" rx="8" fill="#e6eaff" /><g stroke="#aab5ee" strokeWidth="5" strokeLinecap="round"><path d="M12 20h40" /><path d="M12 36h40" /><path d="M12 52h28" /></g></g>
+
+      {/* body */}
+      <rect x="188" y="290" width="136" height="98" rx="48" fill="url(#mWhite)" />
+      <rect x="236" y="318" width="40" height="8" rx="4" fill="#8aa0ff" opacity=".6" />
+      {/* ears */}
+      <rect x="146" y="196" width="26" height="54" rx="13" fill="#5b8cff" />
+      <rect x="340" y="196" width="26" height="54" rx="13" fill="#5b8cff" />
+      {/* head */}
+      <rect x="160" y="148" width="192" height="146" rx="64" fill="url(#mWhite)" />
+      <rect x="178" y="168" width="156" height="102" rx="46" fill="url(#mScreen)" />
+      <g stroke="#7fe8ff" strokeWidth="9" strokeLinecap="round" fill="none">
+        <path d="M212 216q15-20 30 0" /><path d="M270 216q15-20 30 0" /><path d="M240 240q16 15 32 0" />
+      </g>
+      <ellipse cx="204" cy="240" rx="9" ry="5" fill="#ff8fb4" opacity=".55" /><ellipse cx="308" cy="240" rx="9" ry="5" fill="#ff8fb4" opacity=".55" />
+      {/* arm and hand on chin */}
+      <path d="M200 350q-38-8-14-58" stroke="url(#mWhite)" strokeWidth="30" strokeLinecap="round" fill="none" />
+      <circle cx="196" cy="284" r="19" fill="#fff" />
+      <path d="M194 268q-2-14 8-14" stroke="#dfe5ff" strokeWidth="9" strokeLinecap="round" fill="none" />
+    </svg>
+  );
+}
+
+function Wave() {
+  return (
+    <svg className="wave" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="wv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#4b3fe0" stopOpacity=".55" /><stop offset=".5" stopColor="#2c63ff" stopOpacity=".35" /><stop offset="1" stopColor="#6a3fe0" stopOpacity=".5" /></linearGradient></defs>
+      <path d="M0 90C200 20 380 40 620 90S1100 150 1440 60V160H0Z" fill="url(#wv)" />
+      <path d="M0 120C260 70 460 110 720 130S1200 120 1440 100V160H0Z" fill="#0a1040" opacity=".8" />
+    </svg>
   );
 }
 
@@ -67,7 +114,7 @@ function Cta({ user, big, onLogin, onSignup, onOpenApp }) {
   if (user) return <button type="button" className={"btn primary" + size} onClick={onOpenApp}>Open the app</button>;
   return (
     <>
-      <button type="button" className={"btn primary" + size} onClick={onLogin}>Log in</button>
+      <button type="button" className={"btn primary" + size} onClick={onLogin}><svg className="ico" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c1-4.5 4.5-6 8-6s7 1.5 8 6" /></svg>Log in</button>
       <button type="button" className={"btn" + size} onClick={onSignup}>Create account</button>
     </>
   );
@@ -106,20 +153,50 @@ export default function HomePage({ user = null, onLogin, onSignup, onOpenApp }) 
   return (
     <div className="home" ref={scroller}>
       <header className="bar">
-        <span className="brand">{PROJECT.name}</span>
+        <span className="brand"><LogoMark />{PROJECT.shortName}</span>
         <span className="bar-cta"><Cta {...cta} /></span>
       </header>
 
       <section className="hero">
+        <Wave />
         <div className="hero-text">
-          <h1>{PROJECT.name}</h1>
-          <p className="lead">{PROJECT.tagline}</p>
+          <h1>
+            <span className="h1-a">{PROJECT.headline[0]}</span>
+            <span className="h1-b">{PROJECT.headline[1]}</span>
+            <span className="h1-c">{PROJECT.tagline}</span>
+          </h1>
           <p className="sub">{PROJECT.summary}</p>
-          <div className="cta-row"><Cta {...cta} big /></div>
+          <ul className="feats">
+            {FEATURES.map(([label, icon]) => (
+              <li key={label}>
+                <span className="feat-ico"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">{icon}</svg></span>
+                {label}
+              </li>
+            ))}
+          </ul>
         </div>
-        <CitationDemo />
-      </section>
 
+        <Mascot />
+
+        <aside className="ask" aria-labelledby="ask-t">
+          <h2 id="ask-t">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" /></svg>
+            What can you ask?
+          </h2>
+          <p>Ask anything related to your uploaded documents. Our system will find the most relevant information and show you the source.</p>
+          <h3>Example Questions:</h3>
+          <ul>
+            {EXAMPLES.map((q) => (
+              <li key={q}>
+                <button type="button" onClick={() => (user ? onOpenApp?.(q) : onLogin?.(q))}>
+                  {q}
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6 6 6-6 6" /></svg>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </section>
       <div className="shell">
         <nav className="toc" aria-label="On this page">
           {SECTIONS.map(([id, label]) => (

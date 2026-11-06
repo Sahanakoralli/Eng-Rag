@@ -1,10 +1,11 @@
 // The text you are most likely to edit. HomePage.jsx reads everything from here.
 export const PROJECT = {
-  name: "Engineering RAG",
-  tagline: "Ask questions about engineering documents. Get answers that point to the page.",
-  summary:
-    "Upload specifications, standards and reports, or search a library you indexed in advance. Every answer is built " +
-    "from passages found in your documents and cites them, so you can check the source in one click.",
+  name: "Retrieval Based Question Answering",
+  shortName: "RAG QA",
+  // Hero headline: two big lines, then the smaller tagline underneath.
+  headline: ["Retrieval Based", "Question Answering"],
+  tagline: "for Document Fetching",
+  summary: "Ask questions about your documents. Get answers that point to the page.",
 
   // Optional: your own measured retrieval results, from `python -m engrag.cli evaluate --compare`.
   // Fill this in and the Evaluation section shows a results table; leave it empty and the table is hidden.

@@ -9,10 +9,10 @@ export default function DocsPanel({ files, selected, onToggle, onDelete, onUploa
       {libraryAvailable && (
         <div className="scope-switch" role="tablist" aria-label="What to search">
           <button role="tab" aria-selected={corpus === "library"} className={corpus === "library" ? "on" : ""} onClick={() => onCorpus("library")}>
-            📚 Indexed library
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6" /></svg> Indexed library
           </button>
           <button role="tab" aria-selected={corpus === "uploads"} className={corpus === "uploads" ? "on" : ""} onClick={() => onCorpus("uploads")}>
-            📄 My uploads
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M7 3h7l5 5v13H7zM14 3v5h5" /></svg> My uploads
           </button>
         </div>
       )}
@@ -22,7 +22,7 @@ export default function DocsPanel({ files, selected, onToggle, onDelete, onUploa
             ? "Questions search the documents you indexed with the CLI. Uploading a file switches to “My uploads”."
             : "Tick the documents to search. Nothing ticked = search all ready files."}
         </span>
-        <button className="primary small" onClick={() => pick.current.click()}>Upload document</button>
+        <button className="primary small" onClick={() => pick.current.click()}><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14" /></svg> Upload document</button>
         <input ref={pick} type="file" multiple hidden accept=".pdf,.docx,.pptx,.html,.htm,.md,.txt"
                onChange={(e) => { if (e.target.files.length) onUpload([...e.target.files]); e.target.value = ""; }} />
       </div>

@@ -1,55 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
+
 /* Login / signup page + the account row at the bottom of the sidebar.
-   Uses your existing CSS variables (--bg, --card, --text, --mut, --line, --acc, --bad) when they exist. */
-.auth-page, .auth-loading {
-  --a-bg: var(--bg, #f6f7f9); --a-card: var(--card, #fff); --a-text: var(--text, #1d2330);
-  --a-mut: var(--mut, #667085); --a-line: var(--line, #e3e6ec); --a-acc: var(--acc, #2f6fed); --a-bad: var(--bad, #b42318);
-}
-@media (prefers-color-scheme: dark) {
-  .auth-page, .auth-loading {
-    --a-bg: var(--bg, #14171d); --a-card: var(--card, #1c2028); --a-text: var(--text, #e8eaf0);
-    --a-mut: var(--mut, #98a2b3); --a-line: var(--line, #2c313c); --a-acc: var(--acc, #6b9bff); --a-bad: var(--bad, #ff7b72);
-  }
-}
-.auth-page, .auth-loading {
+   The page matches the home page: sky blue, white and lavender. The loading screen still follows your app variables. */
+.auth-loading {
+  --a-bg: var(--bg, #f6f7f9); --a-text: var(--text, #1d2330);
   min-height: 100vh; display: grid; place-items: center; padding: 24px;
   background: var(--a-bg); color: var(--a-text); font: 15px/1.5 system-ui, sans-serif;
 }
+@media (prefers-color-scheme: dark) {
+  .auth-loading { --a-bg: var(--bg, #14171d); --a-text: var(--text, #e8eaf0); }
+}
+
+.auth-page {
+  --a-bg: #f5fbff; --a-card: #ffffff; --a-text: #0f2447; --a-mut: #4a5f80; --a-line: #cfe3f5;
+  --a-acc: #1f6fe0; --a-bad: #c0261a; --a-soft: #eaf4ff;
+  --a-grad: linear-gradient(135deg, #2fb4ff, #6a7bff);
+  min-height: 100vh; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  background: var(--a-bg); color: var(--a-text); font: 15px/1.55 "Lato", system-ui, -apple-system, "Segoe UI", sans-serif; color-scheme: light;
+}
+.auth-page *, .auth-page *::before, .auth-page *::after { box-sizing: border-box; }
+
+/* left: illustration and pitch */
+.auth-art {
+  position: relative; display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 48px clamp(28px, 5vw, 72px);
+  background:
+    radial-gradient(520px 420px at 8% 12%, rgba(79, 190, 255, .5), transparent 70%),
+    radial-gradient(520px 460px at 85% 60%, rgba(190, 170, 255, .5), transparent 70%),
+    linear-gradient(180deg, #dff2ff, #f5fbff);
+}
+.auth-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 19px; }
+.auth-art h2 { margin: 18px 0 0; font-size: clamp(30px, 3.4vw, 46px); font-weight: 900; line-height: 1.08; letter-spacing: -.01em; max-width: 14ch; }
+.auth-art > p { margin: 0; color: var(--a-mut); font-size: 17px; line-height: 1.5; max-width: 38ch; }
+.auth-illus { width: 100%; max-width: 440px; height: auto; margin: 6px 0; filter: drop-shadow(0 16px 30px rgba(60, 110, 230, .3)); }
+.auth-points { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; max-width: 44ch; }
+.auth-points li { display: flex; align-items: center; gap: 12px; font-size: 14.5px; font-weight: 700; color: #28446f; }
+.auth-points li span {
+  flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; color: var(--a-acc);
+  background: linear-gradient(145deg, #fff, #d6ebff); border: 1px solid rgba(31, 111, 224, .3);
+}
+
+/* right: the form */
+.auth-side { display: grid; place-items: center; padding: 32px 24px; }
 .auth-card {
-  width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px;
-  background: var(--a-card); border: 1px solid var(--a-line); border-radius: 12px; padding: 28px;
+  width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 14px;
+  background: var(--a-card); border: 1px solid var(--a-line); border-radius: 20px; padding: 32px;
+  box-shadow: 0 14px 44px rgba(60, 130, 230, .18);
 }
-.auth-card h1 { margin: 0; font-size: 22px; font-weight: 600; }
-.auth-card .hint { margin: 0; color: var(--a-mut); font-size: 13px; }
-.auth-tabs { display: flex; gap: 6px; }
-.auth-tabs button { flex: 1; }
+.auth-badge {
+  display: grid; place-items: center; width: 50px; height: 50px; border-radius: 16px; color: #fff;
+  background: var(--a-grad); box-shadow: 0 6px 16px rgba(56, 140, 255, .4);
+}
+.auth-card h1 { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -.01em; line-height: 1.15; }
+.auth-card .hint { margin: 0; color: var(--a-mut); font-size: 13.5px; }
+
 .auth-card button {
-  font: inherit; border: 1px solid var(--a-line); background: var(--a-card); color: var(--a-text);
-  border-radius: 8px; padding: 8px 12px; cursor: pointer;
+  font: inherit; font-weight: 700; border: 1px solid var(--a-line); background: var(--a-card); color: var(--a-text);
+  border-radius: 10px; padding: 10px 14px; cursor: pointer; transition: border-color .15s, background-color .15s, filter .15s;
 }
-.auth-card button.on, .auth-card button.primary { background: var(--a-acc); border-color: var(--a-acc); color: #fff; }
-.auth-card button:disabled { opacity: .55; cursor: default; }
-.auth-card label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--a-mut); }
+.auth-card button:hover:not(:disabled) { border-color: var(--a-acc); }
+.auth-card button.primary { background: var(--a-grad); border-color: transparent; color: #fff; box-shadow: 0 6px 16px rgba(56, 140, 255, .35); }
+.auth-card button.primary:hover:not(:disabled) { filter: brightness(1.07); }
+.auth-card button:disabled { opacity: .55; cursor: default; box-shadow: none; }
+
+/* Log in | Sign up and Password | Phone OTP switches */
+.auth-card .auth-tabs, .auth-card .auth-methods { display: flex; gap: 4px; padding: 3px; background: var(--a-soft); border: 1px solid var(--a-line); border-radius: 12px; }
+.auth-card .auth-tabs button, .auth-card .auth-methods button { flex: 1; border: 0; background: none; color: var(--a-mut); padding: 8px 10px; border-radius: 9px; }
+.auth-card .auth-methods button { font-size: 13px; padding: 6px 10px; }
+.auth-card .auth-tabs button.on, .auth-card .auth-methods button.on { background: var(--a-grad); color: #fff; box-shadow: 0 3px 10px rgba(56, 140, 255, .3); }
+
+.auth-card label { display: flex; flex-direction: column; gap: 5px; font-size: 13px; font-weight: 700; color: var(--a-mut); }
+.auth-card label .hint { font-weight: 400; }
 .auth-card input {
-  font: inherit; width: 100%; padding: 9px 10px; border: 1px solid var(--a-line); border-radius: 8px;
-  background: var(--a-bg); color: var(--a-text);
+  font: inherit; font-weight: 400; width: 100%; padding: 10px 12px; border: 1px solid var(--a-line); border-radius: 10px;
+  background: var(--a-soft); color: var(--a-text); transition: border-color .15s, box-shadow .15s, background-color .15s;
 }
-.auth-card button:focus-visible, .auth-card input:focus-visible { outline: 2px solid var(--a-acc); outline-offset: 1px; }
+.auth-card input::placeholder { color: #8ea3c2; }
+.auth-card input:focus { background: #fff; border-color: var(--a-acc); box-shadow: 0 0 0 3px rgba(31, 111, 224, .15); outline: none; }
+.auth-card button:focus-visible { outline: 2px solid var(--a-acc); outline-offset: 2px; }
 .auth-card .pw { position: relative; display: block; }
 .auth-card .pw input { padding-right: 64px; }
-.auth-card .pw-toggle { position: absolute; right: 4px; top: 4px; bottom: 4px; padding: 0 10px; border: 0; background: none; color: var(--a-mut); }
-.auth-card .auth-back { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--a-mut); text-decoration: underline; font-size: 13px; }
+.auth-card .pw-toggle { position: absolute; right: 4px; top: 4px; bottom: 4px; padding: 0 10px; border: 0; background: none; color: var(--a-acc); box-shadow: none; }
+.auth-card .auth-back { align-self: flex-start; border: 0; background: none; padding: 0; color: var(--a-mut); text-decoration: underline; font-size: 13px; font-weight: 400; }
 .auth-error { min-height: 1.3em; color: var(--a-bad); font-size: 13px; }
-
-.sidebar .account {
-  display: flex; align-items: center; gap: 8px; margin-top: auto; padding: 10px 12px;
-  border-top: 1px solid var(--line, #e3e6ec); font-size: 13px;
-}
-.sidebar .account .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sidebar .account .link { border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; padding: 0; font: inherit; }
 
 /* ---- OTP step ---- */
 .auth-card .otp-input {
-  text-align: center; font: 600 26px/1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  text-align: center; font: 700 26px/1 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   letter-spacing: .5em; padding: 14px 10px 14px calc(10px + .5em);
 }
 .auth-card .otp-sent { margin: 0; font-size: 14px; }
@@ -61,12 +97,29 @@
 /* ---- phone field (+91 prefix) ---- */
 .auth-card .phone { display: flex; }
 .auth-card .phone .cc {
-  display: grid; place-items: center; padding: 0 12px; color: var(--a-mut); font-size: 15px;
-  border: 1px solid var(--a-line); border-right: 0; border-radius: 8px 0 0 8px; background: var(--a-card);
+  display: grid; place-items: center; padding: 0 12px; color: var(--a-mut); font-size: 15px; font-weight: 700;
+  border: 1px solid var(--a-line); border-right: 0; border-radius: 10px 0 0 10px; background: #fff;
 }
-.auth-card .phone input { border-radius: 0 8px 8px 0; letter-spacing: .04em; }
+.auth-card .phone input { border-radius: 0 10px 10px 0; letter-spacing: .04em; }
 
-/* ---- log in method switch (Password | Phone OTP) ---- */
-.auth-card .auth-methods { display: flex; gap: 0; border: 1px solid var(--a-line); border-radius: 8px; padding: 2px; }
-.auth-card .auth-methods button { flex: 1; border: 0; background: none; padding: 6px 10px; font-size: 13px; color: var(--a-mut); }
-.auth-card .auth-methods button.on { background: var(--a-acc); color: #fff; }
+/* ---- account row at the bottom of the sidebar ---- */
+.sidebar .account {
+  display: flex; align-items: center; gap: 8px; margin-top: auto; padding: 10px 12px;
+  border-top: 1px solid var(--line, #e3e6ec); font-size: 13px;
+}
+.sidebar .account .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar .account .link { border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; padding: 0; font: inherit; }
+
+/* ---- narrower screens ---- */
+@media (max-width: 960px) {
+  .auth-page { grid-template-columns: 1fr; }
+  .auth-art { padding: 28px 24px 20px; gap: 10px; }
+  .auth-art h2 { margin-top: 8px; font-size: 28px; max-width: none; }
+  .auth-art > p { font-size: 15px; }
+  .auth-illus, .auth-points { display: none; }
+  .auth-side { padding: 8px 16px 32px; }
+}
+@media (max-width: 480px) {
+  .auth-card { padding: 24px 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .auth-page * { transition: none !important; } }

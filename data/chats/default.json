@@ -1,0 +1,60 @@
+{
+ "name": "default",
+ "turns": [
+  {
+   "question": "What is arm?",
+   "answer": "ARM is a microprocessor architecture originally spun out of Acorn and Apple Computer's collaboration, which created a new microprocessor standard and introduced its first embeddable RISC core, the ARM6 solution using ARMv3 architecture [6].",
+   "standalone": "What is arm?",
+   "cited_docs": [
+    "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.24",
+     "section": "ARM Assembly Language Programming & Architecture > Section 1.2: The ARM Family History",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.118",
+     "section": "ARM Assembly Language Programming & Architecture > Solution:",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.53",
+     "section": "ARM Assembly Language Programming & Architecture > ARM data type",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/ARM System Developers Guide Designing and Optimizing System Software by Andrew Sloss Dominic Symes Chris Wright (z-lib.org).pdf, p.12",
+     "section": "ARM System Developer's Guide > Preface",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.18",
+     "section": "ARM Assembly Language Programming & Architecture > 2007",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/ARM Assembly Language_ Programming and Architecture ( PDFDrive.com ).pdf, p.17",
+     "section": "ARM Assembly Language Programming & Architecture > 1999",
+     "cited": true,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793850427.8439918,
+   "status": "answered"
+  }
+ ]
+}

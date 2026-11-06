@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useAuth } from "../AuthGate.jsx";
+import { LogoMark } from "./Art.jsx";
 
 function groupLabel(ts) {
   const d = new Date(ts * 1000), now = new Date();
@@ -30,7 +31,10 @@ export default function Sidebar({ history, activeId, onNew, onOpen, onDelete, op
     <>
       {open && <div className="scrim" onClick={onClose} />}
       <aside className={"sidebar" + (open ? " open" : "")}>
-        <button className="primary new" onClick={onNew}>＋ New chat</button>
+        <div className="brand"><LogoMark size={30} />RAG QA</div>
+        <button className="primary new" onClick={onNew}>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg> New chat
+        </button>
         <input className="search" type="search" placeholder="Search chats…" value={q} onChange={(e) => setQ(e.target.value)} />
         <nav className="history">
           {groups.length === 0 && <div className="hint pad">{q ? "No matching chats." : "Your previous chats will appear here."}</div>}
@@ -42,7 +46,9 @@ export default function Sidebar({ history, activeId, onNew, onOpen, onDelete, op
                      onClick={() => onOpen(c.session_id)} title={c.title}>
                   <span className="chat-title">{c.title}</span>
                   <button className="x" aria-label="Delete chat"
-                          onClick={(e) => { e.stopPropagation(); if (confirm("Delete this chat?")) onDelete(c.session_id); }}>🗑</button>
+                          onClick={(e) => { e.stopPropagation(); if (confirm("Delete this chat?")) onDelete(c.session_id); }}>
+                    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" /></svg>
+                  </button>
                 </div>
               ))}
             </div>
@@ -50,6 +56,7 @@ export default function Sidebar({ history, activeId, onNew, onOpen, onDelete, op
         </nav>
         {user && (
           <div className="account">
+            <span className="avatar-u" aria-hidden="true">{(user.username || "?").slice(0, 1).toUpperCase()}</span>
             <span className="who" title={user.email}>{user.username}</span>
             <a className="link" href="#about">About</a>
             <button className="link" onClick={logout}>Log out</button>

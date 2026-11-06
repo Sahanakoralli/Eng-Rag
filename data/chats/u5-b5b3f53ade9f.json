@@ -1,0 +1,60 @@
+{
+ "name": "u5-b5b3f53ade9f",
+ "turns": [
+  {
+   "question": "what is java",
+   "answer": "Java is an operating system-independent, processor-independent, object-oriented programming language that has become the leading interactive environment for the Web, designed to run on any computer or computing device regardless of the specific microprocessor or operating system the device uses, and is the most popular development platform for mobile devices running the Android operating system [1].",
+   "standalone": "what is java",
+   "cited_docs": [
+    "cse/BookManagement Information Systems - Kenneth C. Laudon - 2016 (1).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/BookManagement Information Systems - Kenneth C. Laudon - 2016 (1).pdf, p.229-230",
+     "section": "Full-Circle Learning > SOFTWARE FOR THE WEB: JAVA, HTML, AND HTML5",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.888",
+     "section": "About the Author > The java.util Subpackages",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.53",
+     "section": "About the Author > An Overview of Java",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.1515",
+     "section": "About the Author > I",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.27-28",
+     "section": "About the Author > What's Inside",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Java The Complete Reference Eleventh Edition by Herbert Schildt (z-lib.org).pdf, p.1515",
+     "section": "About the Author > I",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793935903.6192896,
+   "status": "answered"
+  }
+ ]
+}

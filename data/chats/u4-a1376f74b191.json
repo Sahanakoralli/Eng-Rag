@@ -1,0 +1,61 @@
+{
+ "name": "u4-a1376f74b191",
+ "turns": [
+  {
+   "question": "what is python",
+   "answer": "Python is a programming language used in the book for teaching socket programming and reductions of unsolvable problems, described as \"executable pseudocode\" and noted for its readability and widespread availability [1][2].",
+   "standalone": "what is python",
+   "cited_docs": [
+    "cse/Foundations of Computing An Accessible Introduction to Automata and Formal Languages by Charles D. Allison (z-lib.org).pdf",
+    "cse/Computer Networking A Top-Down Approach by James F. Kurose Keith W. Ross (z-lib.org).pdf"
+   ],
+   "sources": [
+    {
+     "n": 1,
+     "citation": "cse/Foundations of Computing An Accessible Introduction to Automata and Formal Languages by Charles D. Allison (z-lib.org).pdf, p.8-9",
+     "section": "Foundations of Computing > Preface",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 2,
+     "citation": "cse/Computer Networking A Top-Down Approach by James F. Kurose Keith W. Ross (z-lib.org).pdf, p.184",
+     "section": "COMPUTER NETWORKING SIXTH EDITION > 2.7 Socket Programming: Creating Network Applications",
+     "cited": true,
+     "linked": ""
+    },
+    {
+     "n": 3,
+     "citation": "cse/Foundations of Computing An Accessible Introduction to Automata and Formal Languages by Charles D. Allison (z-lib.org).pdf, p.242",
+     "section": "Foundations of Computing > Some Turing machines do not halt on all inputs",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 4,
+     "citation": "cse/Operating Systems (Harvey M. Deitel Paul Deitel etc.) (z-library.sk 1lib.sk z-lib.sk).pdf, p.134",
+     "section": "Operating Systems > 2.6 Software Overview",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 5,
+     "citation": "cse/Computer Networking A Top-Down Approach by James F. Kurose Keith W. Ross (z-lib.org).pdf, p.8",
+     "section": "COMPUTER NETWORKING SIXTH EDITION > What's New in the Sixth Edition?",
+     "cited": false,
+     "linked": ""
+    },
+    {
+     "n": 6,
+     "citation": "cse/Foundations of Computing An Accessible Introduction to Automata and Formal Languages by Charles D. Allison (z-lib.org).pdf, p.141",
+     "section": "Foundations of Computing > Chapter Objectives",
+     "cited": false,
+     "linked": ""
+    }
+   ],
+   "refused": false,
+   "ts": 1793871935.7768466,
+   "status": "answered"
+  }
+ ]
+}
