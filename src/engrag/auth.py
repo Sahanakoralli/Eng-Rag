@@ -24,10 +24,24 @@ from pathlib import Path
 TOKEN_TTL_SECONDS = 30 * 24 * 3600  # a login lasts 30 days
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _USERNAME_RE = re.compile(r"^[A-Za-z0-9_.-]{3,32}$")
+_PHONE_RE = re.compile(r"^[6-9]\d{9}$")  # Indian mobile numbers: 10 digits starting with 6-9
+OTP_DIGITS = 6
+OTP_TTL_SECONDS = 5 * 60        # a code works for 5 minutes
+OTP_RESEND_SECONDS = 30         # minimum gap between two SMS to the same number
+OTP_MAX_SENDS_PER_HOUR = 5      # SMS cost money: cap per number
+OTP_MAX_ATTEMPTS = 5            # wrong guesses allowed per code
 
 
 class UserExists(Exception):
     """The email or username is already registered."""
+
+
+class OtpRateLimited(Exception):
+    """Too many OTPs requested for this number; `wait` is the number of seconds to wait."""
+
+    def __init__(self, wait: int):
+        super().__init__(f"wait {wait}s")
+        self.wait = wait
 
 
 # ------------------------------------------------------------------ input checks (used by the API's request models)
@@ -49,6 +63,33 @@ def validate_password(v: str) -> str:
     if not 8 <= len(v or "") <= 128:
         raise ValueError("use 8-128 characters")
     return v
+
+
+def normalize_phone(v: str) -> str:
+    """Accepts 9876543210, +91 98765 43210, 919876543210, 09876543210. Returns the bare 10 digits."""
+    s = re.sub(r"[\s\-()]", "", v or "")
+    if s.startswith("+"):
+        s = s[1:]
+    if len(s) == 12 and s.startswith("91"):
+        s = s[2:]
+    elif len(s) == 11 and s.startswith("0"):
+        s = s[1:]
+    if not _PHONE_RE.match(s):
+        raise ValueError("enter a valid 10-digit Indian mobile number")
+    return s
+
+
+def validate_otp_code(v: str) -> str:
+    v = (v or "").strip()
+    if not re.fullmatch(rf"\d{{{OTP_DIGITS}}}", v):
+        raise ValueError(f"the OTP is {OTP_DIGITS} digits")
+    return v
+
+
+def _otp_hash(phone: str, code: str) -> str:
+    """Keyed hash of the code (set OTP_SECRET in production so a leaked database cannot be used to read codes)."""
+    key = os.environ.get("OTP_SECRET", "").encode()
+    return hmac.new(key, f"{phone}:{code}".encode(), hashlib.sha256).hexdigest()
 
 
 # ------------------------------------------------------------------ passwords
@@ -131,7 +172,17 @@ CREATE TABLE IF NOT EXISTS users (
     email         TEXT NOT NULL UNIQUE COLLATE NOCASE,
     username      TEXT NOT NULL UNIQUE COLLATE NOCASE,
     password_hash TEXT NOT NULL,
-    created_at    REAL NOT NULL
+    created_at    REAL NOT NULL,
+    phone         TEXT
+);
+CREATE TABLE IF NOT EXISTS otp_codes (
+    phone        TEXT PRIMARY KEY,
+    code_hash    TEXT NOT NULL,
+    expires_at   REAL NOT NULL,
+    attempts     INTEGER NOT NULL DEFAULT 0,
+    sent_at      REAL NOT NULL,
+    send_count   INTEGER NOT NULL DEFAULT 1,
+    window_start REAL NOT NULL
 );
 CREATE TABLE IF NOT EXISTS auth_tokens (
     token_hash TEXT PRIMARY KEY,
@@ -189,6 +240,10 @@ class UserStore:
             try:
                 conn.execute("PRAGMA journal_mode = WAL")
                 conn.executescript(SCHEMA)
+                cols = {r[1] for r in conn.execute("PRAGMA table_info(users)")}
+                if "phone" not in cols:  # database created before phone login existed
+                    conn.execute("ALTER TABLE users ADD COLUMN phone TEXT")
+                conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_phone ON users(phone) WHERE phone IS NOT NULL")
                 conn.commit()
             finally:
                 conn.close()
@@ -210,30 +265,91 @@ class UserStore:
             conn.close()
 
     # ---------- users
-    def create_user(self, email: str, username: str, password: str) -> dict:
+    def create_user(self, email: str, username: str, password: str, phone: str | None = None) -> dict:
         email = email.strip().lower()
         username = username.strip()
         pw_hash = hash_password(password)
         try:
             with self._db() as db:
                 cur = db.execute(
-                    "INSERT INTO users (email, username, password_hash, created_at) VALUES (?, ?, ?, ?)",
-                    (email, username, pw_hash, time.time()))
+                    "INSERT INTO users (email, username, password_hash, created_at, phone) VALUES (?, ?, ?, ?, ?)",
+                    (email, username, pw_hash, time.time(), phone))
                 uid = cur.lastrowid
         except sqlite3.IntegrityError as e:
-            raise UserExists("That email or username is already registered.") from e
-        return {"id": uid, "email": email, "username": username}
+            raise UserExists("That email, username or phone number is already registered.") from e
+        return {"id": uid, "email": email, "username": username, "phone": phone}
 
     def authenticate(self, identifier: str, password: str) -> dict | None:
         """identifier is an email or a username (case-insensitive). Returns the user, or None."""
         ident = identifier.strip()
         with self._db() as db:
-            row = db.execute("SELECT id, email, username, password_hash FROM users WHERE email = ? OR username = ?",
+            row = db.execute("SELECT id, email, username, phone, password_hash FROM users WHERE email = ? OR username = ?",
                              (ident, ident)).fetchone()
         ok = verify_password(password, row["password_hash"] if row else _dummy_hash())
         if row is None or not ok:
             return None
-        return {"id": row["id"], "email": row["email"], "username": row["username"]}
+        return {"id": row["id"], "email": row["email"], "username": row["username"], "phone": row["phone"]}
+
+    # ---------- phone OTP
+    def request_otp(self, phone: str) -> str:
+        """Create and store a fresh code for this number and return it (the caller sends the SMS).
+        Raises OtpRateLimited if a code was sent too recently or too many were sent this hour."""
+        now = time.time()
+        code = f"{secrets.randbelow(10 ** OTP_DIGITS):0{OTP_DIGITS}d}"
+        with self._db() as db:
+            db.execute("BEGIN IMMEDIATE")  # two simultaneous requests cannot both pass the limit check
+            row = db.execute("SELECT sent_at, send_count, window_start FROM otp_codes WHERE phone = ?",
+                             (phone,)).fetchone()
+            count, window_start = 1, now
+            if row:
+                wait = row["sent_at"] + OTP_RESEND_SECONDS - now
+                if wait > 0:
+                    raise OtpRateLimited(int(wait) + 1)
+                if now - row["window_start"] < 3600:
+                    if row["send_count"] >= OTP_MAX_SENDS_PER_HOUR:
+                        raise OtpRateLimited(int(row["window_start"] + 3600 - now) + 1)
+                    count, window_start = row["send_count"] + 1, row["window_start"]
+            db.execute(
+                "INSERT INTO otp_codes (phone, code_hash, expires_at, attempts, sent_at, send_count, window_start) "
+                "VALUES (?, ?, ?, 0, ?, ?, ?) ON CONFLICT (phone) DO UPDATE SET code_hash = excluded.code_hash, "
+                "expires_at = excluded.expires_at, attempts = 0, sent_at = excluded.sent_at, "
+                "send_count = excluded.send_count, window_start = excluded.window_start",
+                (phone, _otp_hash(phone, code), now + OTP_TTL_SECONDS, now, count, window_start))
+        return code
+
+    def cancel_otp(self, phone: str) -> None:
+        """Forget the code (used when the SMS could not be sent, so nothing was delivered)."""
+        with self._db() as db:
+            db.execute("DELETE FROM otp_codes WHERE phone = ?", (phone,))
+
+    def verify_otp(self, phone: str, code: str) -> bool:
+        """True once for the right, unexpired code. Wrong guesses are counted; after OTP_MAX_ATTEMPTS the code is dead."""
+        now = time.time()
+        with self._db() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute("SELECT code_hash, expires_at, attempts FROM otp_codes WHERE phone = ?",
+                             (phone,)).fetchone()
+            if row is None or row["expires_at"] < now or row["attempts"] >= OTP_MAX_ATTEMPTS:
+                return False
+            if hmac.compare_digest(row["code_hash"], _otp_hash(phone, code)):
+                db.execute("UPDATE otp_codes SET expires_at = 0 WHERE phone = ?", (phone,))  # single use
+                return True
+            db.execute("UPDATE otp_codes SET attempts = attempts + 1 WHERE phone = ?", (phone,))
+            return False
+
+    def user_for_phone(self, phone: str) -> dict | None:
+        """The account that registered this (already verified) number, or None."""
+        with self._db() as db:
+            row = db.execute("SELECT id, email, username, phone FROM users WHERE phone = ?", (phone,)).fetchone()
+        return dict(row) if row else None
+
+    def taken_field(self, email: str, username: str, phone: str) -> str | None:
+        """Which of these is already registered ('email', 'username' or 'phone'), or None when all three are free."""
+        with self._db() as db:
+            for field, value in (("email", email.strip().lower()), ("username", username.strip()), ("phone", phone)):
+                if db.execute(f"SELECT 1 FROM users WHERE {field} = ?", (value,)).fetchone():  # field: fixed names above
+                    return field
+        return None
 
     # ---------- login tokens
     def issue_token(self, user_id: int) -> str:
@@ -247,7 +363,7 @@ class UserStore:
     def user_for_token(self, token: str) -> dict | None:
         with self._db() as db:
             row = db.execute(
-                "SELECT u.id, u.email, u.username FROM auth_tokens t JOIN users u ON u.id = t.user_id "
+                "SELECT u.id, u.email, u.username, u.phone FROM auth_tokens t JOIN users u ON u.id = t.user_id "
                 "WHERE t.token_hash = ? AND t.expires_at > ?", (_digest(token), time.time())).fetchone()
         return dict(row) if row else None
 

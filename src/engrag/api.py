@@ -28,6 +28,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field, field_validator
 
 from engrag import auth as accounts
+from engrag import sms
 from engrag.config import settings
 from engrag.generation.chat import Session, chat_turn, safe_name
 from engrag.ingestion import index as idx
@@ -92,6 +93,7 @@ class SignupRequest(BaseModel):
     email: str
     username: str
     password: str
+    phone: str
 
     @field_validator("email")
     @classmethod
@@ -108,10 +110,42 @@ class SignupRequest(BaseModel):
     def _check_password(cls, v: str) -> str:
         return accounts.validate_password(v)
 
+    @field_validator("phone")
+    @classmethod
+    def _check_phone(cls, v: str) -> str:
+        return accounts.normalize_phone(v)
+
+
+class SignupVerifyRequest(SignupRequest):
+    code: str
+
+    @field_validator("code")
+    @classmethod
+    def _check_code(cls, v: str) -> str:
+        return accounts.validate_otp_code(v)
+
 
 class LoginRequest(BaseModel):
     identifier: str = Field(min_length=1, max_length=254, description="Username or email")
     password: str = Field(min_length=1, max_length=128)
+
+
+class OtpRequest(BaseModel):
+    phone: str
+
+    @field_validator("phone")
+    @classmethod
+    def _check_phone(cls, v: str) -> str:
+        return accounts.normalize_phone(v)
+
+
+class OtpVerifyRequest(OtpRequest):
+    code: str
+
+    @field_validator("code")
+    @classmethod
+    def _check_code(cls, v: str) -> str:
+        return accounts.validate_otp_code(v)
 
 
 class SourceOut(BaseModel):
@@ -159,6 +193,7 @@ def create_app(client=None, embedder=None, library_collection=None, uploads_dir=
     S.api_key = settings.api_key if api_key is None else api_key
     S.store = accounts.UserStore(db_path or S.chats_dir.parent / "users.db")  # accounts + per-user chat history
     S.throttle = accounts.LoginThrottle()
+    S.otp_throttle = accounts.LoginThrottle(max_failures=10, window=3600)  # OTP requests per client address per hour
     S.max_bytes = int((settings.max_upload_mb if max_upload_mb is None else max_upload_mb) * 1024 * 1024)
     S.ocr = settings.upload_ocr if ocr is None else ocr
     S.uploads_collection = settings.uploads_collection
@@ -273,10 +308,45 @@ def create_app(client=None, embedder=None, library_collection=None, uploads_dir=
         return {"access_token": S.store.issue_token(user["id"]), "token_type": "bearer", "user": user}
 
     # ---------- accounts
-    @app.post("/auth/signup", status_code=201, dependencies=auth)
-    def signup(req: SignupRequest):
+    def send_code(phone: str, request: Request) -> dict:
+        """Text a one-time code to `phone`, with limits so nobody can make us pay for unlimited SMS."""
+        ip = request.client.host if request.client else "?"
+        wait = S.otp_throttle.blocked_for(ip)
+        if wait:
+            raise HTTPException(429, f"Too many OTP requests. Try again in {wait // 60 + 1} minute(s).",
+                                headers={"Retry-After": str(wait)})
+        S.otp_throttle.fail(ip)  # every request counts
         try:
-            user = S.store.create_user(req.email, req.username, req.password)
+            code = S.store.request_otp(phone)
+        except accounts.OtpRateLimited as e:
+            raise HTTPException(429, f"Please wait {e.wait} seconds before asking for another OTP.",
+                                headers={"Retry-After": str(e.wait)}) from e
+        try:
+            sms.send_otp(phone, code)
+        except sms.SmsError as e:
+            S.store.cancel_otp(phone)
+            raise HTTPException(502, "Could not send the SMS right now. Please try again.") from e
+        return {"sent": True, "expires_in": accounts.OTP_TTL_SECONDS, "resend_in": accounts.OTP_RESEND_SECONDS}
+
+    def check_free(req: SignupRequest) -> None:
+        taken = S.store.taken_field(req.email, req.username, req.phone)
+        if taken:
+            raise HTTPException(409, f"That {'phone number' if taken == 'phone' else taken} is already registered.")
+
+    @app.post("/auth/signup/otp", dependencies=auth)
+    def signup_otp(req: SignupRequest, request: Request):
+        """Signup step 1: check the details are valid and free, then text a code to the phone number."""
+        check_free(req)
+        return send_code(req.phone, request)
+
+    @app.post("/auth/signup", status_code=201, dependencies=auth)
+    def signup(req: SignupVerifyRequest):
+        """Signup step 2: the code proves the phone number is yours, then the account is created."""
+        check_free(req)
+        if not S.store.verify_otp(req.phone, req.code):
+            raise HTTPException(401, "Wrong or expired OTP.")
+        try:
+            user = S.store.create_user(req.email, req.username, req.password, req.phone)
         except accounts.UserExists as e:
             raise HTTPException(409, str(e)) from e
         return login_response(user)
@@ -293,6 +363,22 @@ def create_app(client=None, embedder=None, library_collection=None, uploads_dir=
             S.throttle.fail(who)
             raise HTTPException(401, "Wrong username/email or password.")
         S.throttle.reset(who)
+        return login_response(user)
+
+    @app.post("/auth/otp/request", dependencies=auth)
+    def otp_request(req: OtpRequest, request: Request):
+        """Log in by OTP: text a code to a number that already has an account."""
+        if S.store.user_for_phone(req.phone) is None:
+            raise HTTPException(404, "No account uses this number. Sign up first.")
+        return send_code(req.phone, request)
+
+    @app.post("/auth/otp/verify", dependencies=auth)
+    def otp_verify(req: OtpVerifyRequest):
+        if not S.store.verify_otp(req.phone, req.code):
+            raise HTTPException(401, "Wrong or expired OTP.")
+        user = S.store.user_for_phone(req.phone)
+        if user is None:
+            raise HTTPException(401, "Wrong or expired OTP.")
         return login_response(user)
 
     @app.post("/auth/logout", dependencies=auth)
@@ -551,10 +637,15 @@ details{margin-top:8px;font-size:12.5px;color:var(--mut)}details div{padding:2px
 
 <section id="auth" hidden>
  <form class="card authcard" id="authform">
-  <div class="tabs"><button type="button" id="tab-login" class="on">Log in</button><button type="button" id="tab-signup">Sign up</button></div>
+  <div class="tabs"><button type="button" id="tab-login" class="on">Log in</button><button type="button" id="tab-signup">Sign up</button><button type="button" id="tab-otp">Phone OTP</button></div>
   <label id="row-email" hidden>Email<input type="email" id="f-email" autocomplete="email"></label>
-  <label><span id="lbl-user">Username or email</span><input type="text" id="f-user" autocomplete="username" required></label>
-  <label>Password<input type="password" id="f-pass" autocomplete="current-password" required></label>
+  <label id="row-user"><span id="lbl-user">Username or email</span><input type="text" id="f-user" autocomplete="username" required></label>
+  <label id="row-pass">Password<input type="password" id="f-pass" autocomplete="current-password" required></label>
+  <div id="otpbox" hidden style="display:flex;flex-direction:column;gap:12px">
+   <label>Mobile number (India)<input type="tel" id="f-phone" inputmode="numeric" autocomplete="tel-national" placeholder="10-digit number"></label>
+   <label id="row-code" hidden>OTP<input type="text" id="f-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>
+   <button type="button" id="resend" hidden>Resend OTP</button>
+  </div>
   <label id="keybox" hidden>Server access key<input type="password" id="key" autocomplete="off"></label>
   <div id="autherr" role="alert"></div>
   <button class="primary" id="authbtn" type="submit">Log in</button>
@@ -601,15 +692,46 @@ async function api(path,opt={}){
   if(!r.ok)throw new Error(errText(d,r.statusText));return d}
 
 /* ---------- sign up / log in / log out ---------- */
+let otpSent=false;const JSONH={'Content-Type':'application/json'};
 function setMode(m){
-  mode=m;const login=m==='login';
-  $('#tab-login').classList.toggle('on',login);$('#tab-signup').classList.toggle('on',!login);
-  $('#row-email').hidden=login;$('#f-email').required=!login;$('#lbl-user').textContent=login?'Username or email':'Username';
+  mode=m;const login=m==='login',otp=m==='otp',signup=m==='signup';
+  for(const [id,name] of [['tab-login','login'],['tab-signup','signup'],['tab-otp','otp']])$('#'+id).classList.toggle('on',m===name);
+  $('#row-email').hidden=!signup;$('#f-email').required=signup;
+  $('#row-user').hidden=otp;$('#f-user').required=!otp;$('#row-pass').hidden=otp;$('#f-pass').required=!otp;
+  $('#otpbox').hidden=login;$('#f-phone').required=!login;
+  $('#lbl-user').textContent=login?'Username or email':'Username';
   $('#f-user').autocomplete='username';$('#f-pass').autocomplete=login?'current-password':'new-password';
-  $('#authbtn').textContent=login?'Log in':'Create account';$('#autherr').textContent=''}
-$('#tab-login').onclick=()=>setMode('login');$('#tab-signup').onclick=()=>setMode('signup');
+  resetOtp();$('#autherr').textContent=''}
+function resetOtp(){
+  otpSent=false;$('#row-code').hidden=true;$('#f-code').required=false;$('#f-code').value='';$('#resend').hidden=true;
+  $('#authbtn').textContent=mode==='login'?'Log in':mode==='signup'?'Send OTP to verify phone':'Send OTP'}
+function signupBody(){
+  return {email:$('#f-email').value.trim(),username:$('#f-user').value.trim(),password:$('#f-pass').value,phone:$('#f-phone').value.trim()}}
+async function sendOtp(){
+  const signup=mode==='signup';
+  await api(signup?'/auth/signup/otp':'/auth/otp/request',{method:'POST',headers:JSONH,
+    body:JSON.stringify(signup?signupBody():{phone:$('#f-phone').value.trim()})});
+  otpSent=true;$('#row-code').hidden=false;$('#f-code').required=true;$('#f-code').focus();$('#resend').hidden=false;
+  $('#authbtn').textContent=signup?'Verify and create account':'Verify and log in';
+  $('#autherr').textContent='OTP sent by SMS. It is valid for 5 minutes.'}
+async function otpStep(){
+  $('#autherr').textContent='';$('#authbtn').disabled=true;
+  try{
+    if(!otpSent)await sendOtp();
+    else{
+      const signup=mode==='signup',code=$('#f-code').value.trim();
+      const r=signup?await api('/auth/signup',{method:'POST',headers:JSONH,body:JSON.stringify({...signupBody(),code})})
+        :await api('/auth/otp/verify',{method:'POST',headers:JSONH,body:JSON.stringify({phone:$('#f-phone').value.trim(),code})});
+      token=r.access_token;localStorage.setItem('engrag_token',token);me=r.user;$('#f-pass').value='';$('#f-code').value='';enter()}
+  }catch(err){$('#autherr').textContent=err.message}
+  $('#authbtn').disabled=false}
+$('#resend').onclick=async()=>{$('#autherr').textContent='';try{await sendOtp()}catch(err){$('#autherr').textContent=err.message}};
+$('#f-phone').addEventListener('input',resetOtp);
+$('#tab-login').onclick=()=>setMode('login');$('#tab-signup').onclick=()=>setMode('signup');$('#tab-otp').onclick=()=>setMode('otp');
 $('#authform').addEventListener('submit',async e=>{
-  e.preventDefault();$('#autherr').textContent='';
+  e.preventDefault();
+  if(mode!=='login')return otpStep();
+  $('#autherr').textContent='';
   const login=mode==='login',user=$('#f-user').value.trim(),pass=$('#f-pass').value;
   const body=login?{identifier:user,password:pass}:{email:$('#f-email').value.trim(),username:user,password:pass};
   if($('#key').value)sessionStorage.setItem('key',$('#key').value);
